@@ -31,11 +31,11 @@ if(Directory exists(yn_data_path) not,
 data_dir := Directory with(yn_data_path)
 if(data_dir files size == 5,
   // deserialize
-  Note = doFile(Path with(yn_data_path, "Note.io"))
-  NoteList = doFile(Path with(yn_data_path, "NoteList.io"))
   IdGenerator = doFile(Path with(yn_data_path, "IdGenerator.io"))
   Category = doFile(Path with(yn_data_path, "Category.io"))
   CategoryTable = doFile(Path with(yn_data_path, "CategoryTable.io"))
+  Note = doFile(Path with(yn_data_path, "Note.io"))
+  NoteList = doFile(Path with(yn_data_path, "NoteList.io"))
   ,
   // initialize
   src_dir := Directory with(yn_src_path)
@@ -45,15 +45,24 @@ if(data_dir files size == 5,
 )
 
 // parse command line
-
-
-// take action
+args := System args rest
+if(args size == 0, displayAll)
+if(args at(0) == "new", newNote(args rest))
+if(args at(0) == "edit", editNote(args at(1)))
+if(args at(0) == "show", showNote(args at(1)))
+if(args at(0) == "date", showByDate)
+if(args at(0) == "duedate", showByDueDate)
+if(args at(0) == "priority", showByPriority)
+if(args at(0) == "category", showCategory(args at(1)))
+if(args at(0) == "random", showRandomNote)
+if(args at(0) == "remove", removeNote(args at(1)))
 
 
 // serialize data
 data_dir files foreach(f,
   f remove
 )
+
 // Note
 File openForAppending(Path with(yn_data_path, "Note.io")) write(Note serialized) close
 

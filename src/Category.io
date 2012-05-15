@@ -9,7 +9,11 @@ Category := Object clone do(
     self clone setName(name)
   )
   
-  asString := method(name)  
+  asString := method(name)
+  
+  equals := method(other,
+    other name == self name
+  )
 )
 
 CategoryTable := Object clone do(

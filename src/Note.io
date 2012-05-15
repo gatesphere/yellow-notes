@@ -22,7 +22,7 @@ Note := Object clone do(
   )
   
   new := method(
-    self clone setId(IdGenerator next) setDate(Date now clone)
+    self clone setId(IdGenerator next) setDate(Date now clone) setCategories(list)
   )
   
   shortDisplay := method(
@@ -44,4 +44,14 @@ NoteList := Object clone do(
   clone := method(self)
   
   add := method(note, self notes append(note))
+  
+  get := method(identifier, self notes foreach(n, if(n id == identifier, return n)); nil)
+  
+  getRandom := method(
+    self notes sortBy(block(x, y, x uniqueId asNumber * Random value < y uniqueId asNumber * Random value)) first
+  )
+  
+  remove := method(identifier,
+    self notes remove(self get(identifier))
+  )
 )
