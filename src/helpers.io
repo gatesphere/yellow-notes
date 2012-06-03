@@ -93,7 +93,7 @@ editNote := method(id,
   // edit duedate
   write("Edit due date? (y/N) > ")
   in := File standardInput readLine
-  if(in = "y",
+  if(in == "y",
     write("New due date month (1-12): ")
     m := File standardInput readLine asNumber
     write("New due date day (1-31): ")
